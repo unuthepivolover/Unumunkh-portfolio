@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unumunkh — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f5f3ef;
+      --surface:  #ffffff;
+      --text:     #1a1a1a;
+      --muted:    #6b6b6b;
+      --accent:   #3d5a47;
+      --line:     #ddd9d3;
+      --serif:    'DM Serif Display', serif;
+      --sans:     'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(245,243,239,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* SECTIONS */
+    section { min-height: 100vh; padding: 8rem 4rem 5rem; }
+
+    /* HOME */
+    #home {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    .home-text h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .home-text .subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .home-text .school {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .home-img {
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    .photo-frame {
+      width: 340px; height: 400px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+    }
+
+    .photo-placeholder {
+      text-align: center; color: var(--muted); font-size: 0.85rem;
+    }
+    .photo-placeholder svg { opacity: 0.3; margin-bottom: 0.5rem; display: block; margin-inline: auto; }
+
+    /* DIVIDER LABEL */
+    .section-label {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 3.5rem;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--line);
+    }
+
+    /* ABOUT */
+    #about { background: var(--surface); }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem;
+      align-items: start;
+    }
+
+    .about-stat { margin-bottom: 2.5rem; }
+    .about-stat .num {
+      font-family: var(--serif); font-size: 3.5rem; color: var(--accent);
+      line-height: 1;
+    }
+    .about-stat .label {
+      font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.25rem;
+    }
+
+    .about-bio h2 {
+      font-family: var(--serif); font-size: 2.2rem; margin-bottom: 1.25rem;
+    }
+    .about-bio p { color: var(--muted); margin-bottom: 1rem; }
+
+    /* CLASSES */
+    #classes { background: var(--bg); }
+
+    .classes-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .class-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .class-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+    }
+    .class-card .icon { font-size: 1.5rem; margin-bottom: 1rem; }
+    .class-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; }
+    .class-card p { font-size: 0.82rem; color: var(--muted); }
+
+    /* HOBBIES */
+    #hobbies { background: var(--surface); }
+
+    .hobby-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+
+    .hobby-block {
+      border: 1px solid var(--line); border-radius: 8px; padding: 2.5rem;
+      position: relative; overflow: hidden;
+    }
+
+    .hobby-block .big-icon {
+      position: absolute; right: 1.5rem; bottom: 1rem;
+      font-size: 5rem; opacity: 0.06; user-select: none;
+    }
+
+    .hobby-block h3 {
+      font-family: var(--serif); font-size: 1.6rem; margin-bottom: 0.75rem;
+    }
+    .hobby-block p { font-size: 0.88rem; color: var(--muted); max-width: 26ch; }
+
+    /* CONTACT */
+    #contact {
+      background: var(--accent); color: #e8f0eb;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+    }
+
+    #contact .section-label { color: rgba(232,240,235,0.55); }
+    #contact .section-label::after { background: rgba(232,240,235,0.2); }
+
+    #contact h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 2.5rem; color: #fff;
+    }
+
+    .contact-items { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 1rem; color: rgba(232,240,235,0.85);
+    }
+    .contact-item .ci-icon {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-item a { color: inherit; text-decoration: none; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 2rem;
+      font-size: 0.78rem; color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+    }
+
+    /* FADE IN */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      section { padding: 7rem 1.5rem 4rem; }
+      #home { grid-template-columns: 1fr; text-align: center; }
+      .home-img { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hobby-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#home">Unumunkh</a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#classes">Classes</a></li>
+      <li><a href="#hobbies">Hobbies</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="home-text fade-up">
+      <p class="subtitle">Grade 10A &nbsp;·&nbsp; Age 15</p>
+      <h1>Hello, I'm<br>Unumunkh.</h1>
+      <span class="school">Shildeg School</span>
+    </div>
+
+    <div class="home-img fade-up" style="transition-delay:0.15s">
+      <div class="photo-frame">
+        <!--
+          HOW TO ADD YOUR PHOTO:
+          1. Save your image as "me.jpg" in the same folder as this file
+          2. Delete the photo-placeholder div below
+          3. Uncomment the line below:
+          <img src="me.jpg" alt="Unumunkh" />
+        -->
+        <div class="photo-placeholder">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <p>Your photo here<br><small>See comment in HTML to add it</small></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About me</div>
+    <div class="about-grid fade-up">
+      <div>
+        <div class="about-stat">
+          <div class="num">15</div>
+          <div class="label">Years old</div>
+        </div>
+        <div class="about-stat">
+          <div class="num">10A</div>
+          <div class="label">Grade</div>
+        </div>
+        <div class="about-stat">
+          <div class="num">6+</div>
+          <div class="label">Favourite subjects</div>
+        </div>
+      </div>
+      <div class="about-bio">
+        <h2>A student with a passion for tech &amp; learning.</h2>
+        <p>
+          I'm Unumunkh, a Grade 10A student at Shildeg School in Ulaanbaatar.
+          I'm 15 years old and genuinely enjoy learning — especially when it
+          involves technology, mathematics, and understanding how the world works.
+        </p>
+        <p>
+          Outside the classroom, you'll find me keeping up with the latest phones
+          and cameras, or diving deep into car culture. I believe curiosity is the
+          best skill anyone can have.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLASSES -->
+  <section id="classes">
+    <div class="section-label">Favourite classes</div>
+    <div class="classes-grid fade-up">
+      <div class="class-card">
+        <div class="icon">💻</div>
+        <h3>Information Technology</h3>
+        <p>Exploring computers, software, and the digital world.</p>
+      </div>
+      <div class="class-card">
+        <div class="icon">📐</div>
+        <h3>SAT Math</h3>
+        <p>Problem-solving and analytical thinking through mathematics.</p>
+      </div>
+      <div class="class-card">
+        <div class="icon">🔬</div>
+        <h3>Science</h3>
+        <p>Understanding the natural world through experiments and inquiry.</p>
+      </div>
+      <div class="class-card">
+        <div class="icon">🌍</div>
+        <h3>IB Individuals &amp; Societies</h3>
+        <p>Examining history, geography, and human behaviour.</p>
+      </div>
+      <div class="class-card">
+        <div class="icon">🧠</div>
+        <h3>Social Science</h3>
+        <p>How society, culture, and people shape our world.</p>
+      </div>
+      <div class="class-card">
+        <div class="icon">⚡</div>
+        <h3>Physics</h3>
+        <p>The laws of motion, energy, and the universe.</p>
+      </div>
+      <div class="class-card">
+        <div class="icon">🌱</div>
+        <h3>SEL</h3>
+        <p>Social-emotional learning and personal development.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOBBIES -->
+  <section id="hobbies">
+    <div class="section-label">Hobbies &amp; Interests</div>
+    <div class="hobby-row fade-up">
+      <div class="hobby-block">
+        <span class="big-icon">🚗</span>
+        <h3>Cars</h3>
+        <p>
+          From engineering to design, cars fascinate me. I love learning about
+          different makes, models, and how automotive technology keeps evolving.
+        </p>
+      </div>
+      <div class="hobby-block">
+        <span class="big-icon">📱</span>
+        <h3>Tech</h3>
+        <p>
+          Phones, cameras, gadgets — I follow tech news closely and enjoy
+          understanding what makes new hardware and software tick.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Get in touch</div>
+    <h2>Let's connect.</h2>
+    <div class="contact-items fade-up">
+      <div class="contact-item">
+        <div class="ci-icon">📞</div>
+        <span><a href="tel:+97699190049">+976 9919 0049</a></span>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">🏫</div>
+        <span>Shildeg School, Ulaanbaatar</span>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">🎓</div>
+        <span>Grade 10A &nbsp;·&nbsp; Class of 2027</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Unumunkh &nbsp;·&nbsp; Shildeg School
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
